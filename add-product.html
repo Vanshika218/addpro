@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Add Product - Raghav Handloom</title>
+  <style>
+    body { font-family: Arial; background: #fdfaf6; padding: 2rem; }
+    h2 { color: #333; font-family: 'Cursive', sans-serif; }
+    form { display: flex; flex-direction: column; gap: 1rem; max-width: 400px; margin: auto; }
+    input, textarea { padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+    button { background-color: #28a745; color: white; padding: 8px; border: none; border-radius: 4px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h2>Add New Product</h2>
+  <form onsubmit="event.preventDefault(); saveProduct();">
+    <input type="text" id="name" placeholder="Product Name" required>
+    <input type="number" id="price" placeholder="Price (INR)" required>
+    <textarea id="desc" placeholder="Description (comma-separated)" rows="3" required></textarea>
+    <textarea id="images" placeholder="Image URLs (comma-separated)" rows="3" required></textarea>
+    <button type="submit">Save Product</button>
+  </form>
+
+  <script>
+    function saveProduct() {
+      const name = document.getElementById("name").value.trim();
+      const price = parseFloat(document.getElementById("price").value);
+      const desc = document.getElementById("desc").value.split(',').map(s => s.trim());
+      const images = document.getElementById("images").value.split(',').map(s => s.trim());
+
+      const newProduct = { name, price, description: desc, images };
+
+      const stored = JSON.parse(localStorage.getItem("products")) || [];
+      stored.push(newProduct);
+      localStorage.setItem("products", JSON.stringify(stored));
+
+      alert("Product added successfully!");
+      window.location.href = "bedsheets.html";
+    }
+  </script>
+</body>
+</html>
